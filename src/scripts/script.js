@@ -1,11 +1,35 @@
 // Documentação - 
 $('#documentacao').on('click', () => {
 
-	console.log('Documentação clicado')
+	// Utilizando requisições ajax para substituir o conteúdo html - load, get e post
+	// $('#pagina').load('documentacao.html')
+
+	// $.get('documentacao.html', (data) => {
+
+	// 	$('#pagina').html(data)
+	// })
+
+	$.post('documentacao.html', (data) => {
+
+		$('#pagina').html(data)
+	})
+
+
 })
 
 // Suporte - 
 $('#suporte').on('click', () => {
 	
-	console.log('suporte clicado')
+	// Utilizando requisições ajax para substituir o conteúdo html - load, get e post
+	// $('#pagina').load('suporte.html')
+
+	// $.get('suporte.html', (data) => {
+
+	// 	$('#pagina').html(data)
+	// })
+
+	$.post('suporte.html', (data) => {
+
+		$('#pagina').html(data)
+	})
 })
