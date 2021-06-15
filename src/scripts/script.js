@@ -1,13 +1,16 @@
-// Documentação - 
+// Dashboard - 
 $('#documentacao').on('click', () => {
 
-	// Utilizando requisições ajax para substituir o conteúdo html - load, get e post
-	// $('#pagina').load('documentacao.html')
+	$.post('index.html', (data) => {
 
-	// $.get('documentacao.html', (data) => {
+		$('#pagina').html(data)
+	})
 
-	// 	$('#pagina').html(data)
-	// })
+
+})
+
+// Documentação - 
+$('#documentacao').on('click', () => {
 
 	$.post('documentacao.html', (data) => {
 
@@ -19,14 +22,6 @@ $('#documentacao').on('click', () => {
 
 // Suporte - 
 $('#suporte').on('click', () => {
-	
-	// Utilizando requisições ajax para substituir o conteúdo html - load, get e post
-	// $('#pagina').load('suporte.html')
-
-	// $.get('suporte.html', (data) => {
-
-	// 	$('#pagina').html(data)
-	// })
 
 	$.post('suporte.html', (data) => {
 
