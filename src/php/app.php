@@ -6,10 +6,21 @@ class Dashboard {
 	public $dataInicio;
 	public $dataFim;
 
+	// Vendas
 	public $numeroVendas;
 	public $totalVendas;
+
+	// Clientes
 	public $clientesAtivos;
 	public $clientesInativos;
+
+	// Tipo contato
+	public $reclamacoes;
+	public $elogios;
+	public $sugestoes;
+
+	// Despesas
+	public $despesas;
 
 	public function __get($attr) {
 
@@ -105,52 +116,72 @@ class Bd {
 		return $stmt->fetch(PDO::FETCH_OBJ)->totalVendas;
 	}
 
-	// Função para recuperar o total de clientes ativos
-	public function getClientesAtivos() {
+	// Função para recuperar o total de clientes ativos e inativos
+	public function getEstadoCliente($estadoCliente) {
 
 		$query = "SELECT 
-					COUNT(*) as clientesAtivos 
+					COUNT(*) as estadoCliente
 				FROM 
 					tb_clientes
 				WHERE 
-					cliente_ativo = 1";
+					cliente_ativo = $estadoCliente";
 
 		$stmt = $this->conexao->prepare($query);
 
 		$stmt->execute();
 
-		return $stmt->fetch(PDO::FETCH_OBJ)->clientesAtivos;
+		return $stmt->fetch(PDO::FETCH_OBJ)->estadoCliente;
 	}
 
-	// Função para recuperar o total de clientes inativos
-	public function getClientesInativos() {
+	// Função para recuperar o total do tipo de contato
+	public function getTipoContato($tipoContato) {
 
 		$query = "SELECT 
-					COUNT(*) as clientesInativos 
+					COUNT(*) as reclamacao
 				FROM 
-					tb_clientes
+					`tb_contatos`
 				WHERE 
-					cliente_ativo = 0";
+					tipo_contato = $tipoContato";
+
+		$stmt = $this->conexao->prepare($query);
+		$stmt->execute();
+
+		return $stmt->fetch(PDO::FETCH_OBJ)->reclamacao;
+	}
+
+	// Função para recuperar o total de despesas
+	public function getTotalDespesas() {
+
+		$query = "SELECT 
+					SUM(total) as totalDespesas 
+				FROM 
+					tb_despesas
+				WHERE 
+					data_despesa BETWEEN :dataInicio AND :dataFim";
 
 		$stmt = $this->conexao->prepare($query);
 
+		$stmt->bindValue(':dataInicio', $this->dashboard->__get('dataInicio'));
+		$stmt->bindValue(':dataFim', $this->dashboard->__get('dataFim'));
+
 		$stmt->execute();
 
-		return $stmt->fetch(PDO::FETCH_OBJ)->clientesInativos;
+		return $stmt->fetch(PDO::FETCH_OBJ)->totalDespesas;
+
 	}
 }
 
-// Instânciando as classes
+/*
+	Instânciando as classes
+*/
 
 // Dashboard
-
 $dashboard = new Dashboard();
 
 $dashboard->__set('dataInicio', '2021-02-01');
 $dashboard->__set('dataFim', '2021-02-31');
 
 // Conexão
-
 $conexao = new Conexao();
 
 // Bd
@@ -158,9 +189,18 @@ $bd = new Bd($conexao, $dashboard);
 
 $dashboard->__set('numeroVendas', $bd->getNumeroVendas());
 $dashboard->__set('totalVendas', $bd->getTotalVendas());
-$dashboard->__set('clientesAtivos', $bd->getClientesAtivos());
-$dashboard->__set('clientesInativos', $bd->getClientesInativos());
 
-print_r($dashboard);
+$dashboard->__set('clientesAtivos', $bd->getEstadoCliente(1));
+$dashboard->__set('clientesInativos', $bd->getEstadoCliente(0));
+
+$dashboard->__set('reclamacoes', $bd->getTipoContato(1));
+$dashboard->__set('elogios', $bd->getTipoContato(2));
+$dashboard->__set('sugestoes', $bd->getTipoContato(3));
+
+$dashboard->__set('despesas', $bd->getTotalDespesas());
+
+echo "<pre>";
+	print_r($dashboard);
+echo "</pre>";
 
 ?>
