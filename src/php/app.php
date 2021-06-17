@@ -175,17 +175,21 @@ class Bd {
 	Instânciando as classes
 */
 
-// Dashboard
+# Dashboard
 $dashboard = new Dashboard();
+
+# Conexão
+$conexao = new Conexao();
+
+# Bd
+$bd = new Bd($conexao, $dashboard);
+
+/*
+	Atribuindo valores
+*/
 
 $dashboard->__set('dataInicio', '2021-02-01');
 $dashboard->__set('dataFim', '2021-02-31');
-
-// Conexão
-$conexao = new Conexao();
-
-// Bd
-$bd = new Bd($conexao, $dashboard);
 
 $dashboard->__set('numeroVendas', $bd->getNumeroVendas());
 $dashboard->__set('totalVendas', $bd->getTotalVendas());
