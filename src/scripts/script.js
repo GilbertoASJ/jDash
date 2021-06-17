@@ -1,14 +1,3 @@
-// Dashboard - 
-$('#documentacao').on('click', () => {
-
-	$.post('index.html', (data) => {
-
-		$('#pagina').html(data)
-	})
-
-
-})
-
 // Documentação - 
 $('#documentacao').on('click', () => {
 
@@ -26,5 +15,18 @@ $('#suporte').on('click', () => {
 	$.post('suporte.html', (data) => {
 
 		$('#pagina').html(data)
+	})
+})
+
+// Implementação do Ajax na aplicação - 
+$('#competencia').on('change', (e) => {
+
+	// Método da requisição, url, dados, sucesso, erro.
+	$.ajax({
+		type: 'GET',
+		url: '../php/app.php',
+		data: 'competencia=2021-02', // x-www-form-urlencoded
+		success: () => {console.log('Sucesso')},
+		error: () => {console.log('Erro')},
 	})
 })
