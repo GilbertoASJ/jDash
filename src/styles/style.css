@@ -24,7 +24,8 @@ body {
   line-height: 50px;
   display: block;
   text-align: center;
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .nav-side-menu .toggle-btn {
