@@ -21,12 +21,14 @@ $('#suporte').on('click', () => {
 // Implementação do Ajax na aplicação - 
 $('#competencia').on('change', (e) => {
 
+	let competencia = $(e.target).val();
+
 	// Método da requisição, url, dados, sucesso, erro.
 	$.ajax({
 		type: 'GET',
-		url: '../php/app.php',
-		data: 'competencia=2021-02', // x-www-form-urlencoded
-		success: () => {console.log('Sucesso')},
-		error: () => {console.log('Erro')},
+		url: './src/php/app.php',
+		data: `competencia=${competencia}`, // x-www-form-urlencoded
+		success: dados => { console.log(dados) },
+		error: erro => { console.log(erro) },
 	})
 })
