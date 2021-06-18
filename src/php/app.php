@@ -188,6 +188,12 @@ $bd = new Bd($conexao, $dashboard);
 	Atribuindo valores
 */
 
+$competencia = explode('-', $_GET['competencia']);
+$ano = $competencia[0];
+$mes = $competencia[1];
+
+$diasDoMes = cal_days_in_month(calendar, month, year);
+
 $dashboard->__set('dataInicio', '2021-02-01');
 $dashboard->__set('dataFim', '2021-02-31');
 
@@ -204,7 +210,7 @@ $dashboard->__set('sugestoes', $bd->getTipoContato(3));
 $dashboard->__set('despesas', $bd->getTotalDespesas());
 
 echo "<pre>";
-	print_r($dashboard);
+	print_r($competencia);
 echo "</pre>";
 
 ?>
