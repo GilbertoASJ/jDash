@@ -192,10 +192,10 @@ $competencia = explode('-', $_GET['competencia']);
 $ano = $competencia[0];
 $mes = $competencia[1];
 
-$diasDoMes = cal_days_in_month(calendar, month, year);
+$diasDoMes = cal_days_in_month(CAL_GREGORIAN, $mes, $ano);
 
-$dashboard->__set('dataInicio', '2021-02-01');
-$dashboard->__set('dataFim', '2021-02-31');
+$dashboard->__set('dataInicio', "$ano-$mes-01");
+$dashboard->__set('dataFim', "$ano-$mes-$diasDoMes");
 
 $dashboard->__set('numeroVendas', $bd->getNumeroVendas());
 $dashboard->__set('totalVendas', $bd->getTotalVendas());
@@ -209,8 +209,7 @@ $dashboard->__set('sugestoes', $bd->getTipoContato(3));
 
 $dashboard->__set('despesas', $bd->getTotalDespesas());
 
-echo "<pre>";
-	print_r($competencia);
-echo "</pre>";
+echo json_encode(($dashboard));
+
 
 ?>

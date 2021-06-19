@@ -28,7 +28,18 @@ $('#competencia').on('change', (e) => {
 		type: 'GET',
 		url: './src/php/app.php',
 		data: `competencia=${competencia}`, // x-www-form-urlencoded
-		success: dados => { console.log(dados) },
-		error: erro => { console.log(erro) },
+		dataType: 'json',
+		success: (dados) => {
+			console.log(dados)
+			$('#numeroVendas').html(dados.numeroVendas);
+			$('#totalVendas').html(`R$ ${dados.totalVendas}`);
+			$('#clientesAtivos').html(dados.clientesAtivos);
+			$('#clientesInativos').html(dados.clientesInativos);
+			$('#reclamacoes').html(dados.reclamacoes);
+			$('#elogios').html(dados.elogios);
+			$('#sugestoes').html(dados.sugestoes);
+			$('#totalDespesas').html(`R$ ${dados.despesas}`);
+		},
+		error: (erro) => { console.log(erro) },
 	})
 })
